@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
-from dengue_predictor_enhanced import EnhancedDengueForecaster
+from dengue_predictor_enhanced import EnhancedDengueForecaster, train_enhanced_model
 import os
 from datetime import datetime, timedelta
 import warnings
@@ -172,12 +172,47 @@ def load_forecaster():
     """Load the trained forecaster model"""
     try:
         if not os.path.exists('enhanced_dengue_forecaster.pkl'):
-            st.error("❌ Model not found! Please run the training script first.")
-            st.stop()
-        
-        forecaster = EnhancedDengueForecaster()
-        forecaster.load_model()
-        return forecaster
+            st.warning("🔄 Model not found! Training new model... This may take a few minutes.")
+            
+            # Import the training function
+            from dengue_predictor_enhanced import train_enhanced_model
+            
+            # Create progress bar
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            
+            with st.spinner("🧠 Training AI model... Please wait (this may take 2-3 minutes)"):
+                status_text.text("📊 Loading and preparing data...")
+                progress_bar.progress(20)
+                
+                try:
+                    # Train the model
+                    status_text.text("🔥 Training neural network...")
+                    progress_bar.progress(50)
+                    
+                    forecaster = train_enhanced_model()
+                    
+                    progress_bar.progress(90)
+                    status_text.text("✅ Model training completed!")
+                    progress_bar.progress(100)
+                    
+                    # Clear the progress indicators
+                    progress_bar.empty()
+                    status_text.empty()
+                    
+                    st.success("🎉 Model trained successfully!")
+                    return forecaster
+                    
+                except Exception as e:
+                    st.error(f"❌ Error training model: {e}")
+                    st.error("Please check if the data file 'Dengue_Data (2010-2020).xlsx' is present.")
+                    st.stop()
+        else:
+            # Load existing model
+            forecaster = EnhancedDengueForecaster()
+            forecaster.load_model()
+            return forecaster
+            
     except Exception as e:
         st.error(f"❌ Error loading model: {e}")
         st.stop()

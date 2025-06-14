@@ -325,8 +325,6 @@ class EnhancedDengueForecaster:
         
         with open(filepath, 'wb') as f:
             pickle.dump(model_data, f)
-        
-        print(f"✅ Model saved to {filepath}")
     
     def load_model(self, filepath='enhanced_dengue_forecaster.pkl'):
         """Load the complete forecaster"""
@@ -341,14 +339,9 @@ class EnhancedDengueForecaster:
         self.sequence_length = model_data['sequence_length']
         self.forecast_horizon = model_data['forecast_horizon']
         self.df = model_data['df']
-        
-        print(f"✅ Model loaded from {filepath}")
 
 def train_enhanced_model():
     """Train the enhanced model if not already trained"""
-    print("🦟 ENHANCED DENGUE FORECASTING IN SRI LANKA")
-    print("=" * 60)
-    
     # Initialize forecaster
     forecaster = EnhancedDengueForecaster(sequence_length=12, forecast_horizon=6)
     
@@ -357,8 +350,6 @@ def train_enhanced_model():
     
     # Create sequences
     X, y, districts, dates = forecaster.create_sequences(data)
-    
-    print(f"📊 Dataset shape: X={X.shape}, y={y.shape}")
     
     # Split data (temporal split - last 20% for testing)
     split_idx = int(0.8 * len(X))
@@ -370,30 +361,19 @@ def train_enhanced_model():
         X_train, y_train, test_size=0.2, random_state=42
     )
     
-    print(f"🔄 Data splits:")
-    print(f"  Training: {X_train.shape[0]} samples")
-    print(f"  Validation: {X_val.shape[0]} samples") 
-    print(f"  Testing: {X_test.shape[0]} samples")
-    
-    # Train model
-    history = forecaster.train_model(X_train, y_train, X_val, y_val, epochs=50)
+    # Train model with reduced verbosity
+    history = forecaster.train_model(X_train, y_train, X_val, y_val, epochs=50)  
     
     # Evaluate model
-    print("📊 Evaluating model performance...")
-    y_pred = forecaster.model.predict(X_test)
+    y_pred = forecaster.model.predict(X_test, verbose=0)
     
     # Calculate overall metrics
     overall_mae = mean_absolute_error(y_test.flatten(), y_pred.flatten())
     overall_r2 = r2_score(y_test.flatten(), y_pred.flatten())
     
-    print(f"📈 Overall Performance:")
-    print(f"  MAE: {overall_mae:.4f}")
-    print(f"  R²: {overall_r2:.4f}")
-    
     # Save the complete model
     forecaster.save_model()
     
-    print("🎉 Enhanced dengue forecasting model completed successfully!")
     return forecaster
 
 if __name__ == "__main__":
