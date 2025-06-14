@@ -1,4 +1,4 @@
-# �� Dengue Forecasting Sri Lanka
+# Dengue Forecasting Sri Lanka
 
 > AI-powered dengue case prediction for all 26 Sri Lankan districts
 
@@ -10,7 +10,7 @@
 
 ### 🚀 One-Command Launch
 ```bash
-git clone <your-repo-url> && cd dengue
+git clone diw-666 && cd dengue
 pip install -r requirements.txt
 python run_dashboard.py
 ```
