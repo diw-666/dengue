@@ -9,19 +9,19 @@ import os
 
 def check_model_exists():
     """Check if the trained model exists"""
-    if not os.path.exists('enhanced_dengue_forecaster.pkl'):
+    if not os.path.exists('advanced_dengue_forecaster.pkl'):
         print("❌ Trained model not found!")
-        print("🔄 Training the model first...")
+        print("🔄 Training the advanced model first...")
         
         # Run the training script
         try:
-            subprocess.run([sys.executable, 'dengue_predictor_enhanced.py'], check=True)
-            print("✅ Model training completed!")
+            subprocess.run([sys.executable, 'advanced_dengue_forecaster.py'], check=True)
+            print("✅ Advanced model training completed!")
         except subprocess.CalledProcessError as e:
             print(f"❌ Error training model: {e}")
             return False
     else:
-        print("✅ Trained model found!")
+        print("✅ Advanced trained model found!")
     
     return True
 

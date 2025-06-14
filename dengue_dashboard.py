@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
-from dengue_predictor_enhanced import EnhancedDengueForecaster, train_enhanced_model
+from advanced_dengue_forecaster import AdvancedDengueForecaster, train_advanced_model
 import os
 from datetime import datetime, timedelta
 import warnings
@@ -171,11 +171,11 @@ setTimeout(function() {
 def load_forecaster():
     """Load the trained forecaster model"""
     try:
-        if not os.path.exists('enhanced_dengue_forecaster.pkl'):
+        if not os.path.exists('advanced_dengue_forecaster.pkl'):
             st.warning("🔄 Model not found! Training new model... This may take a few minutes.")
             
             # Import the training function
-            from dengue_predictor_enhanced import train_enhanced_model
+            from advanced_dengue_forecaster import train_advanced_model
             
             # Create progress bar
             progress_bar = st.progress(0)
@@ -190,7 +190,7 @@ def load_forecaster():
                     status_text.text("🔥 Training neural network...")
                     progress_bar.progress(50)
                     
-                    forecaster = train_enhanced_model()
+                    forecaster = train_advanced_model()
                     
                     progress_bar.progress(90)
                     status_text.text("✅ Model training completed!")
@@ -209,8 +209,8 @@ def load_forecaster():
                     st.stop()
         else:
             # Load existing model
-            forecaster = EnhancedDengueForecaster()
-            forecaster.load_model()
+            forecaster = AdvancedDengueForecaster()
+            forecaster.load_advanced_model()
             return forecaster
             
     except Exception as e:
@@ -220,12 +220,32 @@ def load_forecaster():
 @st.cache_data
 def get_district_list(_forecaster):
     """Get list of available districts"""
-    return sorted(_forecaster.districts.tolist())
+    try:
+        if hasattr(_forecaster, 'districts') and _forecaster.districts is not None:
+            return sorted(_forecaster.districts.tolist())
+        elif hasattr(_forecaster, 'df') and _forecaster.df is not None:
+            return sorted(_forecaster.df['City'].unique().tolist())
+        else:
+            return ['Colombo', 'Gampaha', 'Kalutara']  # Default fallback
+    except Exception as e:
+        return ['Colombo', 'Gampaha', 'Kalutara']  # Default fallback
 
 @st.cache_data
 def get_historical_data(_forecaster, district):
     """Get historical data for a district"""
-    return _forecaster.get_historical_data(district)
+    try:
+        return _forecaster.get_historical_data(district)
+    except Exception as e:
+        # Fallback: get data directly from the dataframe
+        if hasattr(_forecaster, 'df') and _forecaster.df is not None:
+            district_data = _forecaster.df[_forecaster.df['City'] == district].copy()
+            district_data = district_data.sort_values('Date')
+            return {
+                'dates': district_data['Date'].tolist(),
+                'values': district_data['Value'].tolist()
+            }
+        else:
+            return {'dates': [], 'values': []}
 
 def create_prediction_chart(historical_data, prediction_data, district):
     """Create an interactive prediction chart"""
@@ -453,7 +473,7 @@ def main():
                 historical_data = get_historical_data(forecaster, selected_district)
                 
                 # Generate predictions
-                prediction_data = forecaster.predict_long_term(selected_district, years=prediction_years)
+                prediction_data = forecaster.predict_long_term_robust(selected_district, years=prediction_years)
                 
                 # Create metrics
                 metrics = create_summary_metrics(historical_data, prediction_data)
