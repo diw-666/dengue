@@ -20,46 +20,114 @@ python run_dashboard.py
 
 ## ✨ Key Features
 
-### 🧠 **Advanced AI**
-- **5-Model Ensemble** with bootstrap sampling
-- **Uncertainty Quantification** (95% confidence intervals)
-- **85%+ accuracy** on test data
-- **Long-term forecasting** (1-10 years)
+### 🧠 **Advanced AI Architecture**
+- **3-Model Ensemble** with bootstrap sampling
+- **LSTM Networks** with attention mechanisms
+- **22 engineered features** (temporal patterns, lags, rolling statistics)
+- **Time series cross-validation** for robust evaluation
 
 ### 📊 **Professional Dashboard**
-- **Dark theme** interface
-- **Interactive predictions** with confidence bands
-- **Feature importance** analysis
-- **Risk assessment** and export capabilities
+- **Dark theme** modern interface
+- **Interactive predictions** with Plotly visualizations
+- **Uncertainty quantification** with confidence intervals
+- **Risk assessment** and trend analysis
+- **CSV export** capabilities
 
-### 🔬 **Technical Excellence**
-- **20+ engineered features** (lags, rolling stats, seasonality)
-- **Time series cross-validation**
-- **Robust outlier handling**
-- **SHAP interpretability**
+### 🔬 **Scientific Approach**
+- **Proper temporal validation** (no data leakage)
+- **Feature importance** analysis with SHAP
+- **Bootstrap confidence intervals**
+- **Comprehensive evaluation metrics**
+- **Long-term forecasting** up to 10 years
 
 ---
 
 ## 🎮 Usage
 
+### **Dashboard Interface**
 1. **Launch**: `python run_dashboard.py`
-2. **Select**: District and forecast period
-3. **Predict**: Get forecasts with uncertainty
-4. **Export**: Download results as CSV
+2. **Select**: Choose district from 26 options
+3. **Configure**: Set forecast period (1-10 years)
+4. **Predict**: Get forecasts with uncertainty bands
+5. **Export**: Download results as CSV
+
+### **Programmatic API**
+```python
+from advanced_dengue_forecaster import AdvancedDengueForecaster
+
+# Load trained model
+forecaster = AdvancedDengueForecaster()
+forecaster.load_advanced_model()
+
+# Make prediction with uncertainty
+result = forecaster.predict_with_uncertainty(
+    district='Colombo', 
+    years=3, 
+    confidence_level=0.95
+)
+
+print(f"Mean prediction: {result['mean_prediction']}")
+print(f"Confidence interval: {result['lower_bound']} - {result['upper_bound']}")
+```
 
 ---
 
 ## 🧠 AI Architecture
 
+### **Ensemble System**
 ```
-Ensemble = [Model₁, Model₂, Model₃, Model₄, Model₅]
-├── LSTM Networks (64-72 units)
-├── Dropout + Batch Normalization
-├── Bootstrap sampling for diversity
-└── Uncertainty quantification
+Advanced Forecaster
+├── Base LSTM Model (64 units)
+├── Ensemble Models (3x LSTM variants)
+├── Bootstrap Sampling
+├── Uncertainty Quantification
+└── Feature Importance Analysis
 ```
 
-**Features**: Temporal patterns, lags (1-12 months), rolling statistics, district encoding
+### **Feature Engineering**
+- **Temporal Features**: Month, quarter, year encoding
+- **Lag Features**: 1, 2, 3, 6, 12-month historical values
+- **Rolling Statistics**: 3, 6, 12-month means and standard deviations
+- **Trend Features**: First and seasonal differences
+- **District Encoding**: Normalized location-specific patterns
+
+### **Training Process**
+1. **Data Preparation**: 3,432 records from 26 districts (2010-2020)
+2. **Sequence Creation**: 2,990 training samples with 12-month input
+3. **Time Series Splitting**: Proper temporal validation
+4. **Ensemble Training**: 3 models with different architectures
+5. **Uncertainty Calibration**: Bootstrap prediction intervals
+
+---
+
+## 📊 Performance
+
+### **Actual Test Results** (Time Series Cross-Validation)
+- **Overall MAE**: 131.8 cases/month
+- **Overall R² Score**: 0.480 (48% variance explained)
+- **Overall RMSE**: 258.7 cases/month
+- **Dataset**: 3,432 records, 26 districts, 2010-2020
+
+### **Horizon-wise Performance**
+| Forecast Period | MAE | RMSE | R² Score | Performance |
+|----------------|-----|------|----------|-------------|
+| 1 month ahead | 114.6 | 239.3 | 0.561 | **Best** |
+| 2 months ahead | 126.4 | 255.5 | 0.500 | Good |
+| 3 months ahead | 135.1 | 267.1 | 0.453 | Fair |
+| 4 months ahead | 137.6 | 268.0 | 0.442 | Fair |
+| 5 months ahead | 136.6 | 261.1 | 0.458 | Fair |
+| 6 months ahead | 140.3 | 260.4 | 0.461 | Fair |
+
+### **District Performance** (Historical Averages 2010-2020)
+| Rank | District | Avg Cases/Month | Peak Cases | Data Quality |
+|------|----------|----------------|------------|--------------|
+| 1 | **Colombo** | 974.9 | 2,050 | Excellent |
+| 2 | **Gampaha** | 629.1 | 2,050 | Excellent |
+| 3 | **Kandy** | 326.8 | 2,050 | Excellent |
+| 4 | **Kalutara** | 298.5 | 2,050 | Excellent |
+| 5 | **Rathnapura** | 266.5 | 2,050 | Excellent |
+
+*All 26 districts have 132 monthly records each*
 
 ---
 
@@ -67,53 +135,81 @@ Ensemble = [Model₁, Model₂, Model₃, Model₄, Model₅]
 
 ```
 dengue/
-├── run_dashboard.py              # Launcher
-├── dengue_dashboard.py           # Streamlit dashboard  
-├── advanced_dengue_forecaster.py # Ensemble AI system
-├── dengue_predictor_robust.py    # Base forecaster
-├── Dengue_Data (2010-2020).xlsx  # Training data
-└── requirements.txt              # Dependencies
+├── 🚀 run_dashboard.py              # Smart launcher
+├── 📊 dengue_dashboard.py           # Streamlit dashboard  
+├── 🧠 advanced_dengue_forecaster.py # Ensemble AI system
+├── 🔧 dengue_predictor_robust.py    # Base forecaster
+├── 📈 Dengue_Data (2010-2020).xlsx  # Training data (3,432 records)
+├── 📦 advanced_dengue_forecaster.pkl # Trained models
+├── 🤖 robust_dengue_model.h5        # Neural network weights
+├── 📋 requirements.txt              # Dependencies
+├── ⚙️ pyproject.toml               # Project config
+└── 🌐 runtime.txt                  # Deployment config
 ```
 
 ---
 
-## 📊 Performance
+## ⚠️ Limitations & Disclaimers
 
-- **Overall MAE**: 131.8 cases/month
-- **Overall R² Score**: 0.480 (48% variance explained)
-- **Overall RMSE**: 258.7 cases/month
-- **Dataset**: 3,432 records, 26 districts, 2010-2020
+### **Model Limitations**
+- **Accuracy**: 48% variance explained - moderate predictive power
+- **Horizon Degradation**: Performance decreases for longer forecasts
+- **Data Dependency**: Based on 2010-2020 historical patterns
+- **External Factors**: Doesn't include weather, population, or policy changes
 
-### **Horizon-wise Performance**
-| Horizon | MAE | RMSE | R² Score |
-|---------|-----|------|----------|
-| 1 month | 114.6 | 239.3 | 0.561 |
-| 2 months | 126.4 | 255.5 | 0.500 |
-| 3 months | 135.1 | 267.1 | 0.453 |
-| 4 months | 137.6 | 268.0 | 0.442 |
-| 5 months | 136.6 | 261.1 | 0.458 |
-| 6 months | 140.3 | 260.4 | 0.461 |
-
-### **Top Districts by Cases** (2010-2020 Average)
-1. **Colombo**: 974.9 cases/month (Max: 2,050)
-2. **Gampaha**: 629.1 cases/month (Max: 2,050)  
-3. **Kandy**: 326.8 cases/month (Max: 2,050)
-4. **Kalutara**: 298.5 cases/month (Max: 2,050)
-5. **Rathnapura**: 266.5 cases/month (Max: 2,050)
-
-### **Model Architecture**
-- **Ensemble Models**: 3 LSTM networks
-- **Features**: 22 engineered variables
-- **Sequence Length**: 12 months input
-- **Forecast Horizon**: 6 months output
-- **Training Samples**: 2,990 sequences
+### **Important Notes**
+- **Research Tool**: For planning and analysis purposes only
+- **Medical Decisions**: Always consult healthcare professionals
+- **Validation**: Continuously validate with new data
+- **Uncertainty**: Consider confidence intervals in all decisions
+- **Updates**: Model may need retraining with recent data
 
 ---
 
-<div align="center">
+## 🛠️ Development
+
+### **Local Setup**
+```bash
+# Clone repository
+git clone diw-666/dengue 
+cd dengue
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Train models (optional - auto-trained on first run)
+python advanced_dengue_forecaster.py
+
+# Launch dashboard
+python run_dashboard.py
+```
+
+## 🤝 Contributing
+
+### **Areas for Improvement**
+- **Weather Integration**: Add meteorological data
+- **Real-time Data**: Connect to live surveillance systems
+- **Mobile Interface**: Responsive design improvements
+- **Additional Models**: XGBoost, Prophet integration
+- **Multi-country**: Expand to other dengue-endemic regions
+
+### **How to Contribute**
+1. **Fork** the repository
+2. **Create** feature branch
+3. **Implement** improvements
+4. **Test** thoroughly
+5. **Submit** pull request
+
+---
 
 **🦟 Made with ❤️ by Yasiru Vithana**
 
-**Quick Links**: [Launch](#-quick-start) • [Features](#-key-features) • [Architecture](#-ai-architecture) • [API](#-api-usage) • [Performance](#-performance)
+*Advanced AI for dengue prevention in Sri Lanka*
+
+⭐ **Star this repo if it's helping protect communities!**
+
+---
+
+**🔗 Links**: [Quick Start](#-quick-start) • [Features](#-key-features) • [Performance](#-performance) • [Architecture](#-ai-architecture) • [Usage](#-usage)
 
 </div> 
