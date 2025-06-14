@@ -9,7 +9,7 @@
 ## 🚀 Quick Start
 
 ```bash
-git clone <repo> && cd dengue
+git clone diw-666 && cd dengue
 pip install -r requirements.txt
 python run_dashboard.py
 ```
@@ -50,25 +50,6 @@ python run_dashboard.py
 3. **Configure**: Set forecast period (1-10 years)
 4. **Predict**: Get forecasts with uncertainty bands
 5. **Export**: Download results as CSV
-
-### **Programmatic API**
-```python
-from advanced_dengue_forecaster import AdvancedDengueForecaster
-
-# Load trained model
-forecaster = AdvancedDengueForecaster()
-forecaster.load_advanced_model()
-
-# Make prediction with uncertainty
-result = forecaster.predict_with_uncertainty(
-    district='Colombo', 
-    years=3, 
-    confidence_level=0.95
-)
-
-print(f"Mean prediction: {result['mean_prediction']}")
-print(f"Confidence interval: {result['lower_bound']} - {result['upper_bound']}")
-```
 
 ---
 
