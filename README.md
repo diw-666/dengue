@@ -77,85 +77,42 @@ dengue/
 
 ---
 
-## 💡 API Usage
-
-```python
-from advanced_dengue_forecaster import AdvancedDengueForecaster
-
-forecaster = AdvancedDengueForecaster()
-forecaster.load_advanced_model()
-
-# Get prediction with uncertainty
-result = forecaster.predict_with_uncertainty(
-    district='Colombo', years=3, confidence_level=0.95
-)
-```
-
----
-
 ## 📊 Performance
 
-- **Mean Absolute Error**: 15.2 cases/month
-- **R² Score**: 0.847 (84.7% variance explained)
-- **Uncertainty Coverage**: 94.8% at 95% CI
-- **Top Districts**: Colombo (MAE 12.1), Kandy (14.3), Gampaha (13.7)
+- **Overall MAE**: 131.8 cases/month
+- **Overall R² Score**: 0.480 (48% variance explained)
+- **Overall RMSE**: 258.7 cases/month
+- **Dataset**: 3,432 records, 26 districts, 2010-2020
 
----
+### **Horizon-wise Performance**
+| Horizon | MAE | RMSE | R² Score |
+|---------|-----|------|----------|
+| 1 month | 114.6 | 239.3 | 0.561 |
+| 2 months | 126.4 | 255.5 | 0.500 |
+| 3 months | 135.1 | 267.1 | 0.453 |
+| 4 months | 137.6 | 268.0 | 0.442 |
+| 5 months | 136.6 | 261.1 | 0.458 |
+| 6 months | 140.3 | 260.4 | 0.461 |
 
-## 🚀 Advanced vs Basic
+### **Top Districts by Cases** (2010-2020 Average)
+1. **Colombo**: 974.9 cases/month (Max: 2,050)
+2. **Gampaha**: 629.1 cases/month (Max: 2,050)  
+3. **Kandy**: 326.8 cases/month (Max: 2,050)
+4. **Kalutara**: 298.5 cases/month (Max: 2,050)
+5. **Rathnapura**: 266.5 cases/month (Max: 2,050)
 
-| Feature | Basic | **Advanced** |
-|---------|-------|-------------|
-| Models | Single LSTM | **5-Model Ensemble** |
-| Uncertainty | None | **95% Confidence Intervals** |
-| Features | ~5 basic | **20+ engineered** |
-| Horizon | 6 months | **Up to 10 years** |
-| Interface | Basic plots | **Interactive Dashboard** |
-
----
-
-## 🏆 System Highlights
-
-### **🔬 Scientific Rigor**
-- Peer-review quality methodology
-- Proper time series validation
-- Statistical uncertainty quantification
-- Feature importance analysis
-
-### **💻 Technical Excellence**  
-- Production-ready codebase
-- Comprehensive error handling
-- Automatic model management
-- Professional documentation
-
-### **🎨 User Experience**
-- Intuitive dark theme interface
-- Interactive visualizations  
-- Export capabilities
-- Real-time predictions
-
-### **📈 Business Value**
-- Long-term planning support
-- Risk assessment capabilities
-- Data-driven decision making
-- Professional reporting
-
----
-
-## ⚠️ Important Notes
-
-- **Research Tool**: For planning purposes only
-- **Medical Decisions**: Consult healthcare professionals  
-- **Data**: Based on 2010-2020 historical records
-- **Uncertainty**: Always consider confidence intervals
+### **Model Architecture**
+- **Ensemble Models**: 3 LSTM networks
+- **Features**: 22 engineered variables
+- **Sequence Length**: 12 months input
+- **Forecast Horizon**: 6 months output
+- **Training Samples**: 2,990 sequences
 
 ---
 
 <div align="center">
 
-**🦟 Made with ❤️ for dengue prevention in Sri Lanka**
-
-⭐ **Star this repo if it's helping save lives!**
+**🦟 Made with ❤️ by Yasiru Vithana**
 
 **Quick Links**: [Launch](#-quick-start) • [Features](#-key-features) • [Architecture](#-ai-architecture) • [API](#-api-usage) • [Performance](#-performance)
 
